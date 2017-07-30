@@ -4,12 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zolostays.SplashActivity">
+    android:background="@color/colorPrimary"
+    tools:context="com.zolostays.ui.splash.SplashActivity">
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
+        style="@style/H1WhiteHeadingStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="@string/app_name"
+        android:maxLines="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
