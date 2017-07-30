@@ -1,0 +1,2 @@
+# Zolostays
+Zolo Residencies - ReThink PGs, Think Zolo. Zolo properties are well-furnished and come with wifi, meals, housekeeping and other essential services. A simple app to manage your stay - book your accommodation, make payments, get your concerns resolved and more. We also have a dedicated Zolo Care team - just call 88-8010-8010 or write to info@zolostays.com.  Present in Bangalore, Pune, Kota and Chennai.  Website link - www.zolostays.com Facebook - https://www.facebook.com/zolostays/
