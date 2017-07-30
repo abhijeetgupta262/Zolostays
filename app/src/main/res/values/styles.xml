@@ -8,4 +8,20 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Custom Style for UI Components -->
+    <!-- Base Heading Style -->
+    <style name="WhiteHeadingStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <!-- H1 Heading Style -->
+    <style name="H1WhiteHeadingStyle" parent="WhiteHeadingStyle">
+        <item name="android:textSize">@dimen/h1</item>
+    </style>
+    <!-- H2 Heading Style -->
+    <style name="H2WhiteHeadingStyle" parent="WhiteHeadingStyle">
+        <item name="android:textSize">@dimen/h2</item>
+    </style>
+
+
 </resources>
