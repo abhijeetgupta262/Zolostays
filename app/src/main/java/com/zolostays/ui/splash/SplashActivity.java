@@ -1,5 +1,6 @@
 package com.zolostays.ui.splash;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -7,6 +8,7 @@ import android.widget.Toast;
 import com.zolostays.R;
 import com.zolostays.application.ZolostaysApplication;
 import com.zolostays.common.AppConstants;
+import com.zolostays.ui.login.LoginActivity;
 
 import javax.inject.Inject;
 
@@ -58,6 +60,10 @@ public class SplashActivity extends AppCompatActivity implements SplashNavigator
     public void goForLogin()
     {
         // Start the Login Screen
+        Intent loginActivityIntent = new Intent(SplashActivity.this, LoginActivity.class);
+        // finish the current splash activity
+        finish();
+        startActivity(loginActivityIntent);
     }
 
     @Override

@@ -4,6 +4,12 @@
     <!-- Common Dimens -->
     <dimen name="standard_padding">16dp</dimen>
 
+    <dimen name="dimen_5">5dp</dimen>
+    <dimen name="dimen_10">10dp</dimen>
+    <dimen name="dimen_15">15dp</dimen>
+    <dimen name="dimen_20">20dp</dimen>
+
+
     <!-- Common Fonts Size -->
     <dimen name="h1">45sp</dimen>
     <dimen name="h2">36sp</dimen>
@@ -15,6 +21,7 @@
     <dimen name="p">15sp</dimen>
     <dimen name="small">13sp</dimen>
 
-    <!---->
+    <!-- Login Activity -->
+    <dimen name="cover_image_height">150dp</dimen>
 
 </resources>
