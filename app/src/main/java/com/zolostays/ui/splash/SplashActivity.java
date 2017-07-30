@@ -2,9 +2,13 @@ package com.zolostays.ui.splash;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.zolostays.R;
+import com.zolostays.application.ZolostaysApplication;
 import com.zolostays.common.AppConstants;
+
+import javax.inject.Inject;
 
 /**
  * This class/activity is responsible for the Splash of the application.
@@ -21,7 +25,7 @@ public class SplashActivity extends AppCompatActivity implements SplashNavigator
     /* =================================== Class Variable ======================================= */
 
     // Variable for the View Model
-    private SplashViewModel splashViewModel;
+    @Inject SplashViewModel splashViewModel;
 
     /* ================================ Getter - Setter Method ================================== */
 
@@ -33,8 +37,9 @@ public class SplashActivity extends AppCompatActivity implements SplashNavigator
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        // Initialize the ViewModel
-        splashViewModel = new SplashViewModel(SplashActivity.this);
+        // Inject the Dependencies
+        ((ZolostaysApplication)getApplication()).getAppComponent().inject(SplashActivity.this);
+
         // Set Navigator for view model
         splashViewModel.setNavigator(SplashActivity.this);
         // Start view model
@@ -53,7 +58,6 @@ public class SplashActivity extends AppCompatActivity implements SplashNavigator
     public void goForLogin()
     {
         // Start the Login Screen
-
     }
 
     @Override
