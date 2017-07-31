@@ -12,7 +12,8 @@ public class User implements Serializable {
 
     /* =================================== Class Variable ======================================= */
 
-    private int id;
+    @Nullable
+    private String id;
     @Nullable
     private String name;
     @Nullable
@@ -26,10 +27,10 @@ public class User implements Serializable {
     /* =================================== Constructors ========================================= */
 
     public User(String phoneNumber, String password) {
-        this(1, "", phoneNumber, "", password);
+        this("", "", phoneNumber, "", password);
     }
 
-    public User(int id, String name, String phoneNumber, String email, String password) {
+    public User(String id, String name, String phoneNumber, String email, String password) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -39,11 +40,11 @@ public class User implements Serializable {
 
     /* ================================ Getter - Setter Method ================================== */
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
