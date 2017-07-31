@@ -2,6 +2,7 @@
 <resources>
 
     <!-- Common Dimens -->
+    <dimen name="standard_large_padding">30dp</dimen>
     <dimen name="standard_padding">16dp</dimen>
 
     <dimen name="dimen_5">5dp</dimen>
@@ -23,5 +24,7 @@
 
     <!-- Login Activity -->
     <dimen name="cover_image_height">150dp</dimen>
+
+
 
 </resources>
