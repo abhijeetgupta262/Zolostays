@@ -8,7 +8,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 /**
- * Created by standarduser on 30/07/17.
+ * Application Component
  */
 @Singleton
 @Component(modules = {ZolostaysAppModule.class, ViewModelModule.class})

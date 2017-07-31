@@ -11,7 +11,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by standarduser on 30/07/17.
+ * Exposes the ViewModel to be used in the screens.
  */
 
 @Module

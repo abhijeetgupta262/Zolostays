@@ -27,10 +27,12 @@ android {
             resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.1'
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    dataBinding {
+        enabled = true
     }
 }
 

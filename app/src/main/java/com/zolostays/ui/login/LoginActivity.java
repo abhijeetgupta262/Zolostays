@@ -1,11 +1,15 @@
 package com.zolostays.ui.login;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.Observable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.zolostays.R;
 import com.zolostays.application.ZolostaysApplication;
+import com.zolostays.databinding.ActivityLoginBinding;
+import com.zolostays.util.SnackbarUtils;
 
 import javax.inject.Inject;
 
@@ -24,8 +28,11 @@ public class LoginActivity extends AppCompatActivity implements LoginNavigator {
     /* =================================== Class Variable ======================================= */
 
     // Variable for the View Model
-    @Inject
-    LoginViewModel loginViewModel;
+    @Inject LoginViewModel loginViewModel;
+    // Variable for Binding
+    private ActivityLoginBinding loginBinding;
+
+    private Observable.OnPropertyChangedCallback mSnackbarCallback;
 
     /* ================================ Getter - Setter Method ================================== */
 
@@ -35,14 +42,27 @@ public class LoginActivity extends AppCompatActivity implements LoginNavigator {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
+        if (loginBinding == null) {
+            loginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        }
         // Inject the Dependencies
         ((ZolostaysApplication) getApplication()).getAppComponent().inject(LoginActivity.this);
 
         // Set Navigator for view model
         loginViewModel.setNavigator(LoginActivity.this);
 
+        // Bind Login ViewModel
+        loginBinding.setLoginViewModel(loginViewModel);
+
+        setupSnackbar();
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mSnackbarCallback != null) {
+            loginViewModel.snackbarText.removeOnPropertyChangedCallback(mSnackbarCallback);
+        }
+        super.onDestroy();
     }
 
     /* ============================= Implemented Interface Method =============================== */
@@ -66,4 +86,14 @@ public class LoginActivity extends AppCompatActivity implements LoginNavigator {
 
 
     /* =================================== User Define Methods ================================== */
+
+    private void setupSnackbar() {
+        mSnackbarCallback = new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable observable, int i) {
+                SnackbarUtils.showSnackbar(loginBinding.getRoot(), loginViewModel.getSnackbarText());
+            }
+        };
+        loginViewModel.snackbarText.addOnPropertyChangedCallback(mSnackbarCallback);
+    }
 }
