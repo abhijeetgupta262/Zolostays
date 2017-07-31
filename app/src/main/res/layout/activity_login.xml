@@ -19,18 +19,18 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <!--<android.support.v7.widget.AppCompatTextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--style="@style/H1WhiteHeadingStyle"-->
-            <!--android:text="@string/zolo"/>-->
+            <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/H1WhiteHeadingStyle"
+            android:text="@string/zolo"/>
 
-            <!--<android.support.v7.widget.AppCompatTextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="@dimen/dimen_5"-->
-            <!--style="@style/H5WhiteHeadingStyle"-->
-            <!--android:text="@string/zolo_tag_line"/>-->
+            <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_5"
+            style="@style/H5WhiteHeadingStyle"
+            android:text="@string/zolo_tag_line"/>
 
         </LinearLayout>
 
@@ -77,7 +77,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_marginTop="@dimen/dimen_15"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -106,7 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAllCaps="true"
-            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_15"
             style="@style/H5ButtonYellowBoldStyle"
             android:text="@string/log_in"/>
 
