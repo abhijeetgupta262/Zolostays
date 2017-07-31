@@ -3,9 +3,13 @@ package com.zolostays.ui.login;
 import android.content.Context;
 import android.databinding.ObservableField;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.zolostays.BaseViewModel;
+import com.zolostays.R;
+import com.zolostays.data.User;
+import com.zolostays.data.source.UsersDataSource;
 import com.zolostays.data.source.UsersRepository;
 
 /**
@@ -89,8 +93,43 @@ public class LoginViewModel extends BaseViewModel {
         navigator.goForRegistration();
     }
 
-    private void performLoginWithCredentials(String phoneNumber, String password)
-    {
+    /**
+     * This method is responsible for checking user input validity and database for user.
+     * @param phoneNumber - Phone Number
+     * @param password - Password
+     */
+    private void performLoginWithCredentials(String phoneNumber, String password) {
+        if (validateCredentials(phoneNumber, password)) {
+            usersRepository.getTask(phoneNumber, password, new UsersDataSource.GetUserCallback() {
+                @Override
+                public void onUserLoaded(User user) {
+                    if (navigator != null)
+                        navigator.goForHome();
+                    snackbarText.set("Home");
+                }
 
+                @Override
+                public void onDataNotAvailable() {
+                    snackbarText.set(context.getString(R.string.invalid_credentials));
+                }
+            });
+        }
+    }
+
+    /**
+     * This method is used to validate the user inputs such ad Phone amd Password.
+     *
+     * @return - True for validation otherwise False
+     */
+    private boolean validateCredentials(String phoneNumber, String password) {
+        if (phoneNumber == null || phoneNumber.length() != 10) {
+            snackbarText.set(context.getString(R.string.invalid_phone_number_message));
+            return false;
+        } else if (password == null || password.contains(" ") || TextUtils.isEmpty(password)) {
+            snackbarText.set(context.getString(R.string.invalid_password_message));
+            return false;
+        } else {
+            return true;
+        }
     }
 }
