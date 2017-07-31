@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.zolostays.R;
 import com.zolostays.application.ZolostaysApplication;
+import com.zolostays.dagger.ZolostaysAppModule;
+import com.zolostays.dagger.login.DaggerLoginComponent;
+import com.zolostays.dagger.login.LoginModule;
 import com.zolostays.databinding.ActivityLoginBinding;
 import com.zolostays.util.SnackbarUtils;
 
@@ -46,7 +49,12 @@ public class LoginActivity extends AppCompatActivity implements LoginNavigator {
             loginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         }
         // Inject the Dependencies
-        ((ZolostaysApplication) getApplication()).getAppComponent().inject(LoginActivity.this);
+        DaggerLoginComponent.builder()
+                .zolostaysAppModule(new ZolostaysAppModule(getApplication()))
+                .loginModule(new LoginModule())
+                .usersRepositoryComponent(((ZolostaysApplication)getApplication()).getUsersRepositoryComponent())
+                .build()
+                .inject(LoginActivity.this);
 
         // Set Navigator for view model
         loginViewModel.setNavigator(LoginActivity.this);

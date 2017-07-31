@@ -24,6 +24,8 @@ import com.zolostays.data.User;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -47,7 +49,8 @@ public class UsersRepository implements UsersDataSource {
     boolean mCacheIsDirty = false;
 
     // Prevent direct instantiation.
-    private UsersRepository(@NonNull UsersDataSource tasksLocalDataSource) {
+    @Inject
+    UsersRepository(@NonNull UsersDataSource tasksLocalDataSource) {
         mTasksLocalDataSource = checkNotNull(tasksLocalDataSource);
     }
 

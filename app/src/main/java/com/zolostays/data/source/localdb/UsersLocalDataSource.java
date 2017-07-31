@@ -25,6 +25,8 @@ import android.support.annotation.NonNull;
 import com.zolostays.data.User;
 import com.zolostays.data.source.UsersDataSource;
 
+import javax.inject.Inject;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 
@@ -40,7 +42,8 @@ public class UsersLocalDataSource implements UsersDataSource {
     private SQLiteDatabase mDb;
 
     // Prevent direct instantiation.
-    private UsersLocalDataSource(@NonNull Context context) {
+    @Inject
+    public UsersLocalDataSource(@NonNull Context context) {
         checkNotNull(context);
         mDbHelper = new UsersDbHelper(context);
         mDb = mDbHelper.getWritableDatabase();

@@ -22,7 +22,6 @@ public class ZolostaysAppModule
     }
 
     @Provides
-    @Singleton
     public Context provideContext()
     {
         return application;

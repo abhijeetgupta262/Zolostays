@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.zolostays.BaseViewModel;
+import com.zolostays.data.source.UsersRepository;
 
 /**
  * ViewModel for the Login screen.
@@ -19,6 +20,7 @@ public class LoginViewModel extends BaseViewModel {
 
     // Variable for Current Context
     private Context context;
+    private UsersRepository usersRepository;
     // Variable for Login Navigator
     private LoginNavigator navigator;
     // Variable for Observer
@@ -28,8 +30,9 @@ public class LoginViewModel extends BaseViewModel {
 
     /* =================================== Constructors ========================================= */
 
-    public LoginViewModel(Context context) {
+    public LoginViewModel(Context context, UsersRepository usersRepository) {
         this.context = context;
+        this.usersRepository = usersRepository;
     }
 
     /* ================================ Getter - Setter Method ================================== */
@@ -86,7 +89,8 @@ public class LoginViewModel extends BaseViewModel {
         navigator.goForRegistration();
     }
 
-    private void performLoginWithCredentials(String phoneNumber, String password) {
+    private void performLoginWithCredentials(String phoneNumber, String password)
+    {
 
     }
 }

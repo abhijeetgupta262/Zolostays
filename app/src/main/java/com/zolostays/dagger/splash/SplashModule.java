@@ -1,8 +1,7 @@
-package com.zolostays.dagger;
+package com.zolostays.dagger.splash;
 
 import android.content.Context;
 
-import com.zolostays.ui.login.LoginViewModel;
 import com.zolostays.ui.splash.SplashViewModel;
 
 import javax.inject.Singleton;
@@ -11,21 +10,15 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Exposes the ViewModel to be used in the screens.
+ * Created by standarduser on 31/07/17.
  */
 
 @Module
-public class ViewModelModule {
+public class SplashModule
+{
     @Provides
     @Singleton
     SplashViewModel provideSplashViewModel(Context context) {
         return new SplashViewModel(context);
-    }
-
-
-    @Provides
-    @Singleton
-    LoginViewModel provideLoginViewModel(Context context) {
-        return new LoginViewModel(context);
     }
 }

@@ -1,6 +1,7 @@
 package com.zolostays.data.source;
 
 import com.zolostays.application.ZolostaysApplication;
+import com.zolostays.dagger.ZolostaysAppModule;
 
 import javax.inject.Singleton;
 
@@ -11,8 +12,8 @@ import dagger.Component;
  * used in this application.
  */
 @Singleton
-@Component(modules = {UsersRepositoryModule.class, ZolostaysApplication.class})
-public interface TasksRepositoryComponent {
+@Component(modules = {UsersRepositoryModule.class, ZolostaysAppModule.class})
+public interface UsersRepositoryComponent {
 
     UsersRepository getUsersRepository();
 }

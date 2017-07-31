@@ -8,6 +8,9 @@ import android.widget.Toast;
 import com.zolostays.R;
 import com.zolostays.application.ZolostaysApplication;
 import com.zolostays.common.AppConstants;
+import com.zolostays.dagger.ZolostaysAppModule;
+import com.zolostays.dagger.splash.DaggerSplashComponent;
+import com.zolostays.dagger.splash.SplashModule;
 import com.zolostays.ui.login.LoginActivity;
 
 import javax.inject.Inject;
@@ -39,8 +42,11 @@ public class SplashActivity extends AppCompatActivity implements SplashNavigator
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        // Inject the Dependencies
-        ((ZolostaysApplication)getApplication()).getAppComponent().inject(SplashActivity.this);
+//        // Inject the Dependencies
+        DaggerSplashComponent.builder()
+                .zolostaysAppModule(new ZolostaysAppModule(getApplication()))
+                .splashModule(new SplashModule())
+                .build().inject(SplashActivity.this);
 
         // Set Navigator for view model
         splashViewModel.setNavigator(SplashActivity.this);
