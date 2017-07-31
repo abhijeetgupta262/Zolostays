@@ -1,5 +1,6 @@
 package com.zolostays.ui.login;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import com.zolostays.dagger.ZolostaysAppModule;
 import com.zolostays.dagger.login.DaggerLoginComponent;
 import com.zolostays.dagger.login.LoginModule;
 import com.zolostays.databinding.ActivityLoginBinding;
+import com.zolostays.ui.registration.RegistrationActivity;
 import com.zolostays.util.SnackbarUtils;
 
 import javax.inject.Inject;
@@ -82,7 +84,9 @@ public class LoginActivity extends AppCompatActivity implements LoginNavigator {
 
     @Override
     public void goForRegistration() {
-
+        //Start the registration screen
+        Intent registrationActivityIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
+        startActivity(registrationActivityIntent);
     }
 
     @Override

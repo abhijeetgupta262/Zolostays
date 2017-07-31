@@ -25,6 +25,10 @@
         <activity android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait"/>
 
+        <!--Registration Screen-->
+        <activity android:name=".ui.registration.RegistrationActivity"
+            android:screenOrientation="portrait"/>
+
 
     </application>
 
