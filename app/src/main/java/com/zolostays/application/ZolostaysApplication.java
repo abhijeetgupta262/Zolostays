@@ -2,13 +2,12 @@ package com.zolostays.application;
 
 import android.app.Application;
 
-import com.zolostays.dagger.DaggerZolostaysAppComponent;
-import com.zolostays.dagger.ZolostaysAppComponent;
 import com.zolostays.dagger.ZolostaysAppModule;
+import com.zolostays.data.source.DaggerUsersRepositoryComponent;
+import com.zolostays.data.source.UsersRepositoryComponent;
 
 
-public class ZolostaysApplication extends Application
-{
+public class ZolostaysApplication extends Application {
     /* ====================================== Interface ========================================= */
 
 
@@ -18,12 +17,16 @@ public class ZolostaysApplication extends Application
     /* =================================== Class Variable ======================================= */
 
     // Variable for Zolostays App Component
-    private ZolostaysAppComponent appComponent;
+    private UsersRepositoryComponent usersRepositoryComponent;
 
     /* ================================ Getter - Setter Method ================================== */
 
-    public ZolostaysAppComponent getAppComponent() {
-        return appComponent;
+    public UsersRepositoryComponent getUsersRepositoryComponent() {
+        return usersRepositoryComponent;
+    }
+
+    public void setUsersRepositoryComponent(UsersRepositoryComponent usersRepositoryComponent) {
+        this.usersRepositoryComponent = usersRepositoryComponent;
     }
 
     /* ================================== Life Cycle Method ===================================== */
@@ -32,7 +35,7 @@ public class ZolostaysApplication extends Application
     public void onCreate() {
         super.onCreate();
         // Initialize the App Component
-        this.appComponent = initDagger(ZolostaysApplication.this);
+        this.usersRepositoryComponent = initDagger(ZolostaysApplication.this);
     }
 
     /* ============================= Implemented Interface Method =============================== */
@@ -41,9 +44,8 @@ public class ZolostaysApplication extends Application
 
     /* =================================== User Define Methods ================================== */
 
-    private ZolostaysAppComponent initDagger(ZolostaysApplication application)
-    {
-        return DaggerZolostaysAppComponent.builder()
+    private UsersRepositoryComponent initDagger(ZolostaysApplication application) {
+        return DaggerUsersRepositoryComponent.builder()
                 .zolostaysAppModule(new ZolostaysAppModule(application))
                 .build();
     }

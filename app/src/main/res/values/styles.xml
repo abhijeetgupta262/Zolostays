@@ -10,17 +10,102 @@
 
     <!-- Custom Style for UI Components -->
     <!-- Base Heading Style -->
-    <style name="WhiteHeadingStyle" parent="TextAppearance.AppCompat">
+    <style name="WhiteHeadingBoldStyle" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="WhiteHeadingStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- H1 Heading Bold Style -->
+    <style name="H1WhiteHeadingBoldStyle" parent="WhiteHeadingBoldStyle">
+        <item name="android:textSize">@dimen/h1</item>
+    </style>
+
     <!-- H1 Heading Style -->
     <style name="H1WhiteHeadingStyle" parent="WhiteHeadingStyle">
         <item name="android:textSize">@dimen/h1</item>
     </style>
+
+
+    <!-- H2 Heading Bold Style -->
+    <style name="H2WhiteHeadingBoldStyle" parent="WhiteHeadingBoldStyle">
+        <item name="android:textSize">@dimen/h2</item>
+    </style>
+
     <!-- H2 Heading Style -->
     <style name="H2WhiteHeadingStyle" parent="WhiteHeadingStyle">
         <item name="android:textSize">@dimen/h2</item>
+    </style>
+
+
+    <!-- H3 Heading Bold Style -->
+    <style name="H3WhiteHeadingBoldStyle" parent="WhiteHeadingBoldStyle">
+        <item name="android:textSize">@dimen/h3</item>
+    </style>
+
+    <!-- H3 Heading Style -->
+    <style name="H3WhiteHeadingStyle" parent="WhiteHeadingStyle">
+        <item name="android:textSize">@dimen/h3</item>
+    </style>
+
+
+    <!-- H4 Heading Bold Style -->
+    <style name="H4WhiteHeadingBoldStyle" parent="WhiteHeadingBoldStyle">
+        <item name="android:textSize">@dimen/h4</item>
+    </style>
+
+    <!-- H4 Heading Style -->
+    <style name="H4WhiteHeadingStyle" parent="WhiteHeadingStyle">
+        <item name="android:textSize">@dimen/h4</item>
+    </style>
+
+
+    <!-- H5 Heading Bold Style -->
+    <style name="H5WhiteHeadingBoldStyle" parent="WhiteHeadingBoldStyle">
+        <item name="android:textSize">@dimen/h5</item>
+    </style>
+
+    <!-- H5 Heading Style -->
+    <style name="H5WhiteHeadingStyle" parent="WhiteHeadingStyle">
+        <item name="android:textSize">@dimen/h5</item>
+    </style>
+
+
+    <!-- H6 Heading Bold Style -->
+    <style name="H6WhiteHeadingBoldStyle" parent="WhiteHeadingBoldStyle">
+        <item name="android:textSize">@dimen/h6</item>
+    </style>
+
+    <!-- H6 Heading Style -->
+    <style name="H6WhiteHeadingStyle" parent="WhiteHeadingStyle">
+        <item name="android:textSize">@dimen/h6</item>
+    </style>
+
+
+    <!--Button Style-->
+    <!-- Base Button Style -->
+    <style name="ButtonYellowBoldStyle" parent="TextAppearance.AppCompat">
+        <item name="android:background">@color/colorAccent</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ButtonYellowStyle" parent="TextAppearance.AppCompat">
+        <item name="android:background">@color/colorAccent</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!-- H5 Heading Bold Style -->
+    <style name="H5ButtonYellowBoldStyle" parent="ButtonYellowBoldStyle">
+        <item name="android:textSize">@dimen/h5</item>
+    </style>
+
+    <!-- H5 Heading Style -->
+    <style name="H4ButtonYellowStyle" parent="ButtonYellowStyle">
+        <item name="android:textSize">@dimen/h5</item>
     </style>
 
 

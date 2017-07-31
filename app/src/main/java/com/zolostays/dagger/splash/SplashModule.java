@@ -1,4 +1,4 @@
-package com.zolostays.dagger;
+package com.zolostays.dagger.splash;
 
 import android.content.Context;
 
@@ -10,11 +10,12 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by standarduser on 30/07/17.
+ * Created by standarduser on 31/07/17.
  */
 
 @Module
-public class ViewModelModule {
+public class SplashModule
+{
     @Provides
     @Singleton
     SplashViewModel provideSplashViewModel(Context context) {

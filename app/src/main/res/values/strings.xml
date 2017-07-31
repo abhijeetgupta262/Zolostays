@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Zolostays</string>
+
+    <!-- Login -->
+    <string name="zolo_tag_line">Rethink PGs. Think Zolo</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log In</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="create_account">Create Account</string>
+    <string name="zolo">Zolo</string>
+    <string name="invalid_password_message">Please enter valid password.</string>
+    <string name="invalid_phone_number_message">Please enter valid phone number.</string>
+    <string name="invalid_credentials">Please provide correct phone number and password.</string>
+
 </resources>
