@@ -12,5 +12,10 @@
     <string name="invalid_password_message">Please enter valid password.</string>
     <string name="invalid_phone_number_message">Please enter valid phone number.</string>
     <string name="invalid_credentials">Please provide correct phone number and password.</string>
+    <string name="register">Register</string>
+    <string name="your_phone_number">Your phone number</string>
+    <string name="your_email_id">Your Email Id</string>
+    <string name="your_name">Your Name</string>
+    <string name="set_password">Set Password</string>
 
 </resources>
