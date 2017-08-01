@@ -15,7 +15,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 /**
- * Created by standarduser on 31/07/17.
+ * Define Component for Login Activity.
  */
 @ActivityScoped
 @Component(dependencies = {UsersRepositoryComponent.class}, modules = {LoginModule.class, ZolostaysAppModule.class})

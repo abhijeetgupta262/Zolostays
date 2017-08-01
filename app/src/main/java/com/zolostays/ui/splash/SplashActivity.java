@@ -11,6 +11,7 @@ import com.zolostays.common.AppConstants;
 import com.zolostays.dagger.ZolostaysAppModule;
 import com.zolostays.dagger.splash.DaggerSplashComponent;
 import com.zolostays.dagger.splash.SplashModule;
+import com.zolostays.ui.home.HomeActivity;
 import com.zolostays.ui.login.LoginActivity;
 
 import javax.inject.Inject;
@@ -76,6 +77,10 @@ public class SplashActivity extends AppCompatActivity implements SplashNavigator
     public void goForHome()
     {
         // Start the Home Screen
+        Intent homeActivityIntent = new Intent(SplashActivity.this, HomeActivity.class);
+        // finish the current splash activity
+        finish();
+        startActivity(homeActivityIntent);
     }
 
     /* ==================================== OnClick Methods ===================================== */

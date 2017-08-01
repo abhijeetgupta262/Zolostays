@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.zolostays.BaseViewModel;
 import com.zolostays.common.AppConstants;
+import com.zolostays.util.PrefHelper;
 
 /**
  * ViewModel for the Splash screen.
@@ -84,7 +85,7 @@ public class SplashViewModel extends BaseViewModel {
     private void checkUserLoginStatus()
     {
         // Check for the User Info in Shared Preferences
-        if (false)
+        if (PrefHelper.getInstance(context).getPrefrence().contains(AppConstants.SPK_USER_PHONE_NUMBER))
         {
             // Start the Home Screen
             navigator.goForHome();

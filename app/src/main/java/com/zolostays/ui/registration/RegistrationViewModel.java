@@ -1,9 +1,10 @@
-package com.zolostays.ui.login;
+package com.zolostays.ui.registration;
 
 import android.content.Context;
 import android.databinding.ObservableField;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 
 import com.zolostays.BaseViewModel;
@@ -15,10 +16,10 @@ import com.zolostays.data.source.UsersRepository;
 import com.zolostays.util.PrefHelper;
 
 /**
- * ViewModel for the Login screen.
+ * ViewModel for the Registration screen.
  */
 
-public class LoginViewModel extends BaseViewModel {
+public class RegistrationViewModel extends BaseViewModel {
     /* ================================== Constant Variable ===================================== */
 
 
@@ -28,26 +29,28 @@ public class LoginViewModel extends BaseViewModel {
     private Context context;
     private UsersRepository usersRepository;
     // Variable for Login Navigator
-    private LoginNavigator navigator;
+    private RegistrationNavigator navigator;
     // Variable for Observer
     public final ObservableField<String> phoneNumber = new ObservableField<>();
+    public final ObservableField<String> email = new ObservableField<>();
+    public final ObservableField<String> name = new ObservableField<>();
     public final ObservableField<String> password = new ObservableField<>();
     public final ObservableField<String> snackbarText = new ObservableField<>();
 
     /* =================================== Constructors ========================================= */
 
-    public LoginViewModel(Context context, UsersRepository usersRepository) {
+    public RegistrationViewModel(Context context, UsersRepository usersRepository) {
         this.context = context;
         this.usersRepository = usersRepository;
     }
 
     /* ================================ Getter - Setter Method ================================== */
 
-    public LoginNavigator getNavigator() {
+    public RegistrationNavigator getNavigator() {
         return navigator;
     }
 
-    public void setNavigator(LoginNavigator navigator) {
+    public void setNavigator(RegistrationNavigator navigator) {
         this.navigator = navigator;
     }
 
@@ -65,62 +68,43 @@ public class LoginViewModel extends BaseViewModel {
     /* =================================== User Define Methods ================================== */
 
     /**
-     * this method is called when user choose login option.
+     * this method is called when user choose forgot password option.
      *
-     * @param view - View of Button
+     * @param view - View
      */
-    public void onLoginClicked(View view) {
+    public void onRegisterClicked(View view) {
         // Verify enter credentials and navigate accordingly
-        performLoginWithCredentials(phoneNumber.get(), password.get());
-    }
-
-
-    /**
-     * this method is called when user choose forgot password option.
-     *
-     * @param view - View
-     */
-    public void onForgotPasswordClicked(View view) {
-        // Navigate to forgot password screen
-        navigator.goForForgotPassword();
-    }
-
-    /**
-     * this method is called when user choose forgot password option.
-     *
-     * @param view - View
-     */
-    public void onCreateAccountClicked(View view) {
-        // Navigate to registration screen
-        navigator.goForRegistration();
+        performRegisterWithCredentials(phoneNumber.get(), email.get(), name.get(), password.get());
     }
 
     /**
      * This method is responsible for checking user input validity and database for user.
+     *
      * @param phoneNumber - Phone Number
-     * @param password - Password
+     * @param password    - Password
      */
-    private void performLoginWithCredentials(String phoneNumber, String password) {
-        if (validateCredentials(phoneNumber, password)) {
-            usersRepository.getUser(phoneNumber, password, new UsersDataSource.GetUserCallback() {
+    private void performRegisterWithCredentials(String phoneNumber, String email, String name, String password) {
+        if (validateCredentials(phoneNumber, email, name, password))
+        {
+            User user = new User("", name, phoneNumber, email, password);
+            // Check for the phone number availability
+            usersRepository.getUser(phoneNumber, new UsersDataSource.GetUserCallback() {
                 @Override
                 public void onUserLoaded(User user)
                 {
-                    if(user != null)
-                    {
-                        // Store values in shared preferences
-                        PrefHelper.getInstance(context).writePreference(AppConstants.SPK_USER_PHONE_NUMBER, user.getPhoneNumber() != null ? user.getPhoneNumber() : "");
-                        PrefHelper.getInstance(context).writePreference(AppConstants.SPK_USER_NAME, user.getName() != null ? user.getName() : "");
-
-                        // Inform Navigator
-                        if (navigator != null)
-                            navigator.goForHome();
-                    }
+                    snackbarText.set(context.getString(R.string.phone_number_exist));
                 }
 
                 @Override
-                public void onDataNotAvailable() {
-                    snackbarText.set(context.getString(R.string.invalid_credentials));
+                public void onDataNotAvailable()
+                {
+                    usersRepository.saveTask(user);
+                    // Store values in shared preferences
+                    PrefHelper.getInstance(context).writePreference(AppConstants.SPK_USER_PHONE_NUMBER, user.getPhoneNumber() != null ? user.getPhoneNumber() : "");
+                    PrefHelper.getInstance(context).writePreference(AppConstants.SPK_USER_NAME, user.getName() != null ? user.getName() : "");
+
+                    if (navigator != null)
+                        navigator.goForHome();
                 }
             });
         }
@@ -131,11 +115,22 @@ public class LoginViewModel extends BaseViewModel {
      *
      * @return - True for validation otherwise False
      */
-    private boolean validateCredentials(String phoneNumber, String password) {
+    private boolean validateCredentials(String phoneNumber, String email, String name, String password) {
         if (phoneNumber == null || phoneNumber.length() != 10) {
             snackbarText.set(context.getString(R.string.invalid_phone_number_message));
             return false;
-        } else if (password == null || password.contains(" ") || TextUtils.isEmpty(password)) {
+        }
+        else if(email == null || (!Patterns.EMAIL_ADDRESS.matcher(email).matches()))
+        {
+            snackbarText.set(context.getString(R.string.invalid_email_message));
+            return false;
+        }
+        else if(name == null || name.length() <= 0)
+        {
+            snackbarText.set(context.getString(R.string.invalid_name_message));
+            return false;
+        }
+        else if (password == null || password.contains(" ") || TextUtils.isEmpty(password)) {
             snackbarText.set(context.getString(R.string.invalid_password_message));
             return false;
         } else {

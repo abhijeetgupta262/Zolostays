@@ -11,7 +11,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by standarduser on 31/07/17.
+ * Define Module for Login Screen.
  */
 
 @Module

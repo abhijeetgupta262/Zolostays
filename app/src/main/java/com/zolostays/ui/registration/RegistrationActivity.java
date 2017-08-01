@@ -1,30 +1,27 @@
-package com.zolostays.ui.login;
+package com.zolostays.ui.registration;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.zolostays.R;
 import com.zolostays.application.ZolostaysApplication;
 import com.zolostays.dagger.ZolostaysAppModule;
-import com.zolostays.dagger.login.DaggerLoginComponent;
-import com.zolostays.dagger.login.LoginModule;
-import com.zolostays.databinding.ActivityLoginBinding;
+import com.zolostays.dagger.registration.DaggerRegistrationComponent;
+import com.zolostays.dagger.registration.RegistrationModule;
+import com.zolostays.databinding.ActivityRegistrationBinding;
 import com.zolostays.ui.home.HomeActivity;
-import com.zolostays.ui.registration.RegistrationActivity;
 import com.zolostays.util.SnackbarUtils;
 
 import javax.inject.Inject;
 
 /**
- * This class/activity is responsible for show the Ui for the login feature. The User provides
- * credentials (i.e. Phone Number and Password) for login.
+ * This class/activity is responsible for the Registration screen of the application.
  */
 
-public class LoginActivity extends AppCompatActivity implements LoginNavigator {
+public class RegistrationActivity extends AppCompatActivity implements RegistrationNavigator {
     /* ====================================== Interface ========================================= */
 
 
@@ -34,66 +31,47 @@ public class LoginActivity extends AppCompatActivity implements LoginNavigator {
     /* =================================== Class Variable ======================================= */
 
     // Variable for the View Model
-    @Inject LoginViewModel loginViewModel;
+    @Inject
+    RegistrationViewModel viewModel;
     // Variable for Binding
-    private ActivityLoginBinding loginBinding;
+    private ActivityRegistrationBinding registrationBinding;
     // Variable for the Snack text observable
     private Observable.OnPropertyChangedCallback mSnackbarCallback;
-
     /* ================================ Getter - Setter Method ================================== */
 
 
     /* ================================== Life Cycle Method ===================================== */
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (loginBinding == null) {
-            loginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        if (registrationBinding == null) {
+            registrationBinding = DataBindingUtil.setContentView(this, R.layout.activity_registration);
         }
+
         // Inject the Dependencies
-        DaggerLoginComponent.builder()
+        DaggerRegistrationComponent.builder()
                 .zolostaysAppModule(new ZolostaysAppModule(getApplication()))
-                .loginModule(new LoginModule())
-                .usersRepositoryComponent(((ZolostaysApplication)getApplication()).getUsersRepositoryComponent())
+                .registrationModule(new RegistrationModule())
+                .usersRepositoryComponent(((ZolostaysApplication) getApplication()).getUsersRepositoryComponent())
                 .build()
-                .inject(LoginActivity.this);
+                .inject(RegistrationActivity.this);
 
         // Set Navigator for view model
-        loginViewModel.setNavigator(LoginActivity.this);
+        viewModel.setNavigator(RegistrationActivity.this);
         // Bind Login ViewModel
-        loginBinding.setLoginViewModel(loginViewModel);
+        registrationBinding.setRegistrationViewHolder(viewModel);
         // Setup the Snackbar text observable
         setupSnackbar();
-    }
-
-    @Override
-    public void onDestroy() {
-        if (mSnackbarCallback != null) {
-            loginViewModel.snackbarText.removeOnPropertyChangedCallback(mSnackbarCallback);
-        }
-        super.onDestroy();
     }
 
     /* ============================= Implemented Interface Method =============================== */
 
     @Override
-    public void goForForgotPassword() {
-
-    }
-
-    @Override
-    public void goForRegistration() {
-        //Start the registration screen
-        Intent registrationActivityIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
-        startActivity(registrationActivityIntent);
-    }
-
-    @Override
     public void goForHome() {
         // Start the Home screen
-        Intent homeActivityIntent = new Intent(LoginActivity.this, HomeActivity.class);
-        finish();
+        Intent homeActivityIntent = new Intent(RegistrationActivity.this, HomeActivity.class);
+        homeActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(homeActivityIntent);
     }
 
@@ -103,15 +81,15 @@ public class LoginActivity extends AppCompatActivity implements LoginNavigator {
     /* =================================== User Define Methods ================================== */
 
     /**
-     * This method is used setup the Snackbar callbak to the appropriate message on screen.
+     * This method is used setup the {@link android.support.design.widget.Snackbar} callback to the appropriate message on screen.
      */
     private void setupSnackbar() {
         mSnackbarCallback = new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable observable, int i) {
-                SnackbarUtils.showSnackbar(loginBinding.getRoot(), loginViewModel.getSnackbarText());
+                SnackbarUtils.showSnackbar(registrationBinding.getRoot(), viewModel.getSnackbarText());
             }
         };
-        loginViewModel.snackbarText.addOnPropertyChangedCallback(mSnackbarCallback);
+        viewModel.snackbarText.addOnPropertyChangedCallback(mSnackbarCallback);
     }
 }
