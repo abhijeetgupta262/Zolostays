@@ -61,7 +61,7 @@ public class UsersLocalDataSource implements UsersDataSource {
      * found.
      */
     @Override
-    public void getTask(@NonNull String phoneNumber, String password, GetUserCallback callback) {
+    public void getUser(@NonNull String phoneNumber, String password, GetUserCallback callback) {
         try {
             String[] projection = {
                     UsersPersistenceContract.UserEntry.COLUMN_NAME_USER_ID,
@@ -73,6 +73,53 @@ public class UsersLocalDataSource implements UsersDataSource {
 
             String selection = UsersPersistenceContract.UserEntry.COLUMN_NAME_PHONE_NUMBER + " LIKE ? and " + UsersPersistenceContract.UserEntry.COLUMN_NAME_PASSWORD + " LIKE ?";
             String[] selectionArgs = {phoneNumber, password};
+
+            Cursor c = mDb.query(
+                    UsersPersistenceContract.UserEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+
+            User user = null;
+
+            if (c != null && c.getCount() > 0) {
+                c.moveToFirst();
+                String userId = c.getString(c.getColumnIndexOrThrow(UsersPersistenceContract.UserEntry.COLUMN_NAME_USER_ID));
+                String name = c.getString(c.getColumnIndexOrThrow(UsersPersistenceContract.UserEntry.COLUMN_NAME_NAME));
+                String email = c.getString(c.getColumnIndexOrThrow(UsersPersistenceContract.UserEntry.COLUMN_NAME_EMAIL));
+                String strPhoneNumber = c.getString(c.getColumnIndexOrThrow(UsersPersistenceContract.UserEntry.COLUMN_NAME_PHONE_NUMBER));
+                String strPassword = c.getString(c.getColumnIndexOrThrow(UsersPersistenceContract.UserEntry.COLUMN_NAME_PASSWORD));
+
+                user = new User(userId, name, strPhoneNumber, email, strPassword);
+            }
+            if (c != null) {
+                c.close();
+            }
+
+            if (user != null) {
+                callback.onUserLoaded(user);
+            } else {
+                callback.onDataNotAvailable();
+            }
+        } catch (IllegalStateException e) {
+            // Send to analytics, log etc
+        }
+    }
+
+    /**
+     * Note: {@link GetUserCallback#onDataNotAvailable()} is fired if the {@link com.zolostays.data.User} isn't
+     * found.
+     */
+    @Override
+    public void getUser(@NonNull String phoneNumber, GetUserCallback callback) {
+        try {
+            String[] projection = {
+                    UsersPersistenceContract.UserEntry.COLUMN_NAME_USER_ID,
+                    UsersPersistenceContract.UserEntry.COLUMN_NAME_NAME,
+                    UsersPersistenceContract.UserEntry.COLUMN_NAME_EMAIL,
+                    UsersPersistenceContract.UserEntry.COLUMN_NAME_PHONE_NUMBER,
+                    UsersPersistenceContract.UserEntry.COLUMN_NAME_PASSWORD
+            };
+
+            String selection = UsersPersistenceContract.UserEntry.COLUMN_NAME_PHONE_NUMBER + " LIKE ?";
+            String[] selectionArgs = {phoneNumber};
 
             Cursor c = mDb.query(
                     UsersPersistenceContract.UserEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);

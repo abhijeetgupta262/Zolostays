@@ -13,6 +13,7 @@ import com.zolostays.dagger.ZolostaysAppModule;
 import com.zolostays.dagger.login.DaggerLoginComponent;
 import com.zolostays.dagger.login.LoginModule;
 import com.zolostays.databinding.ActivityLoginBinding;
+import com.zolostays.ui.home.HomeActivity;
 import com.zolostays.ui.registration.RegistrationActivity;
 import com.zolostays.util.SnackbarUtils;
 
@@ -90,7 +91,10 @@ public class LoginActivity extends AppCompatActivity implements LoginNavigator {
 
     @Override
     public void goForHome() {
-
+        // Start the Home screen
+        Intent homeActivityIntent = new Intent(LoginActivity.this, HomeActivity.class);
+        finish();
+        startActivity(homeActivityIntent);
     }
 
     /* ==================================== OnClick Methods ===================================== */

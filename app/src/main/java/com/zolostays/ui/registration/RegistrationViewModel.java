@@ -9,8 +9,11 @@ import android.view.View;
 
 import com.zolostays.BaseViewModel;
 import com.zolostays.R;
+import com.zolostays.common.AppConstants;
 import com.zolostays.data.User;
+import com.zolostays.data.source.UsersDataSource;
 import com.zolostays.data.source.UsersRepository;
+import com.zolostays.util.PrefHelper;
 
 /**
  * ViewModel for the Registration screen.
@@ -81,12 +84,29 @@ public class RegistrationViewModel extends BaseViewModel {
      * @param password    - Password
      */
     private void performRegisterWithCredentials(String phoneNumber, String email, String name, String password) {
-        if (validateCredentials(phoneNumber, email, name, password)) {
+        if (validateCredentials(phoneNumber, email, name, password))
+        {
             User user = new User("", name, phoneNumber, email, password);
-            usersRepository.saveTask(user);
+            // Check for the phone number availability
+            usersRepository.getUser(phoneNumber, new UsersDataSource.GetUserCallback() {
+                @Override
+                public void onUserLoaded(User user)
+                {
+                    snackbarText.set(context.getString(R.string.phone_number_exist));
+                }
 
-            if (navigator != null)
-                navigator.goForHome();
+                @Override
+                public void onDataNotAvailable()
+                {
+                    usersRepository.saveTask(user);
+                    // Store values in shared preferences
+                    PrefHelper.getInstance(context).writePreference(AppConstants.SPK_USER_PHONE_NUMBER, user.getPhoneNumber() != null ? user.getPhoneNumber() : "");
+                    PrefHelper.getInstance(context).writePreference(AppConstants.SPK_USER_NAME, user.getName() != null ? user.getName() : "");
+
+                    if (navigator != null)
+                        navigator.goForHome();
+                }
+            });
         }
     }
 

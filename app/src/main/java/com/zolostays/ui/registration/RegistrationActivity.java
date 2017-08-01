@@ -1,5 +1,6 @@
 package com.zolostays.ui.registration;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.Observable;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import com.zolostays.dagger.ZolostaysAppModule;
 import com.zolostays.dagger.registration.DaggerRegistrationComponent;
 import com.zolostays.dagger.registration.RegistrationModule;
 import com.zolostays.databinding.ActivityRegistrationBinding;
+import com.zolostays.ui.home.HomeActivity;
 import com.zolostays.util.SnackbarUtils;
 
 import javax.inject.Inject;
@@ -67,7 +69,10 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
 
     @Override
     public void goForHome() {
-
+        // Start the Home screen
+        Intent homeActivityIntent = new Intent(RegistrationActivity.this, HomeActivity.class);
+        homeActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(homeActivityIntent);
     }
 
     /* ==================================== OnClick Methods ===================================== */

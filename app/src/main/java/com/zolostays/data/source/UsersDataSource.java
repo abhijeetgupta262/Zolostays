@@ -37,7 +37,10 @@ public interface UsersDataSource {
     }
 
     @Nullable
-    void getTask(@NonNull String phoneNumber, String password, GetUserCallback getUserCallback);
+    void getUser(@NonNull String phoneNumber, String password, GetUserCallback getUserCallback);
+
+    @Nullable
+    void getUser(@NonNull String phoneNumber, GetUserCallback getUserCallback);
 
     void saveTask(@NonNull User user);
 

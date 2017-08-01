@@ -29,6 +29,10 @@
         <activity android:name=".ui.registration.RegistrationActivity"
             android:screenOrientation="portrait"/>
 
+        <!--Home Screen-->
+        <activity android:name=".ui.home.HomeActivity"
+            android:screenOrientation="portrait"/>
+
 
     </application>
 

@@ -19,5 +19,7 @@
     <string name="your_email_id">Your Email Id</string>
     <string name="your_name">Your Name</string>
     <string name="set_password">Set Password</string>
+    <string name="logout">Logout</string>
+    <string name="phone_number_exist">Phone number already exist.</string>
 
 </resources>

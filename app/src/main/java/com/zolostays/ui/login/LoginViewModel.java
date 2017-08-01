@@ -8,9 +8,11 @@ import android.view.View;
 
 import com.zolostays.BaseViewModel;
 import com.zolostays.R;
+import com.zolostays.common.AppConstants;
 import com.zolostays.data.User;
 import com.zolostays.data.source.UsersDataSource;
 import com.zolostays.data.source.UsersRepository;
+import com.zolostays.util.PrefHelper;
 
 /**
  * ViewModel for the Login screen.
@@ -100,11 +102,20 @@ public class LoginViewModel extends BaseViewModel {
      */
     private void performLoginWithCredentials(String phoneNumber, String password) {
         if (validateCredentials(phoneNumber, password)) {
-            usersRepository.getTask(phoneNumber, password, new UsersDataSource.GetUserCallback() {
+            usersRepository.getUser(phoneNumber, password, new UsersDataSource.GetUserCallback() {
                 @Override
-                public void onUserLoaded(User user) {
-                    if (navigator != null)
-                        navigator.goForHome();
+                public void onUserLoaded(User user)
+                {
+                    if(user != null)
+                    {
+                        // Store values in shared preferences
+                        PrefHelper.getInstance(context).writePreference(AppConstants.SPK_USER_PHONE_NUMBER, user.getPhoneNumber() != null ? user.getPhoneNumber() : "");
+                        PrefHelper.getInstance(context).writePreference(AppConstants.SPK_USER_NAME, user.getName() != null ? user.getName() : "");
+
+                        // Inform Navigator
+                        if (navigator != null)
+                            navigator.goForHome();
+                    }
                 }
 
                 @Override

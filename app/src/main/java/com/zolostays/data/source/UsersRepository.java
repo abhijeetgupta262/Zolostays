@@ -93,7 +93,7 @@ public class UsersRepository implements UsersDataSource {
      * uses the network data source. This is done to simplify the sample.
      */
     @Override
-    public void getTask(@NonNull final String phoneNumber, String password, @NonNull final GetUserCallback callback) {
+    public void getUser(@NonNull final String phoneNumber, String password, @NonNull final GetUserCallback callback) {
         checkNotNull(phoneNumber);
         checkNotNull(password);
         checkNotNull(callback);
@@ -109,7 +109,45 @@ public class UsersRepository implements UsersDataSource {
         // Load from server/persisted if needed.
 
         // Is the task in the local data source? If not, query the network.
-        mTasksLocalDataSource.getTask(phoneNumber, password, new GetUserCallback() {
+        mTasksLocalDataSource.getUser(phoneNumber, password, new GetUserCallback() {
+            @Override
+            public void onUserLoaded(User user) {
+                // Do in memory cache update to keep the app UI up to date
+                if (mCachedTasks == null) {
+                    mCachedTasks = new LinkedHashMap<>();
+                }
+                mCachedTasks.put(user.getPhoneNumber(), user);
+                callback.onUserLoaded(user);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                callback.onDataNotAvailable();
+            }
+        });
+    }
+
+    /**
+     * Gets tasks from local data source (sqlite) unless the table is new or empty. In that case it
+     * uses the network data source. This is done to simplify the sample.
+     */
+    @Override
+    public void getUser(@NonNull final String phoneNumber, @NonNull final GetUserCallback callback) {
+        checkNotNull(phoneNumber);
+        checkNotNull(callback);
+
+        User cachedUser = getUserWithPhoneNumber(phoneNumber);
+
+        // Respond immediately with cache if available
+        if (cachedUser != null) {
+            callback.onUserLoaded(cachedUser);
+            return;
+        }
+
+        // Load from server/persisted if needed.
+
+        // Is the task in the local data source? If not, query the network.
+        mTasksLocalDataSource.getUser(phoneNumber, new GetUserCallback() {
             @Override
             public void onUserLoaded(User user) {
                 // Do in memory cache update to keep the app UI up to date
