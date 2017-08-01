@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity implements LoginNavigator {
     @Inject LoginViewModel loginViewModel;
     // Variable for Binding
     private ActivityLoginBinding loginBinding;
-
+    // Variable for the Snack text observable
     private Observable.OnPropertyChangedCallback mSnackbarCallback;
 
     /* ================================ Getter - Setter Method ================================== */
@@ -60,10 +60,9 @@ public class LoginActivity extends AppCompatActivity implements LoginNavigator {
 
         // Set Navigator for view model
         loginViewModel.setNavigator(LoginActivity.this);
-
         // Bind Login ViewModel
         loginBinding.setLoginViewModel(loginViewModel);
-
+        // Setup the Snackbar text observable
         setupSnackbar();
     }
 
@@ -99,6 +98,9 @@ public class LoginActivity extends AppCompatActivity implements LoginNavigator {
 
     /* =================================== User Define Methods ================================== */
 
+    /**
+     * This method is used setup the Snackbar callbak to the appropriate message on screen.
+     */
     private void setupSnackbar() {
         mSnackbarCallback = new Observable.OnPropertyChangedCallback() {
             @Override

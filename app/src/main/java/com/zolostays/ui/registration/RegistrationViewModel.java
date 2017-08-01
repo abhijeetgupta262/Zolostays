@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.ObservableField;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 
 import com.zolostays.BaseViewModel;
@@ -98,7 +99,18 @@ public class RegistrationViewModel extends BaseViewModel {
         if (phoneNumber == null || phoneNumber.length() != 10) {
             snackbarText.set(context.getString(R.string.invalid_phone_number_message));
             return false;
-        } else if (password == null || password.contains(" ") || TextUtils.isEmpty(password)) {
+        }
+        else if(email == null || (!Patterns.EMAIL_ADDRESS.matcher(email).matches()))
+        {
+            snackbarText.set(context.getString(R.string.invalid_email_message));
+            return false;
+        }
+        else if(name == null || name.length() <= 0)
+        {
+            snackbarText.set(context.getString(R.string.invalid_name_message));
+            return false;
+        }
+        else if (password == null || password.contains(" ") || TextUtils.isEmpty(password)) {
             snackbarText.set(context.getString(R.string.invalid_password_message));
             return false;
         } else {

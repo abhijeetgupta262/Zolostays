@@ -1,6 +1,7 @@
 package com.zolostays.ui.registration;
 
 import android.databinding.DataBindingUtil;
+import android.databinding.Observable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -10,6 +11,7 @@ import com.zolostays.dagger.ZolostaysAppModule;
 import com.zolostays.dagger.registration.DaggerRegistrationComponent;
 import com.zolostays.dagger.registration.RegistrationModule;
 import com.zolostays.databinding.ActivityRegistrationBinding;
+import com.zolostays.util.SnackbarUtils;
 
 import javax.inject.Inject;
 
@@ -31,7 +33,8 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
     RegistrationViewModel viewModel;
     // Variable for Binding
     private ActivityRegistrationBinding registrationBinding;
-
+    // Variable for the Snack text observable
+    private Observable.OnPropertyChangedCallback mSnackbarCallback;
     /* ================================ Getter - Setter Method ================================== */
 
 
@@ -54,6 +57,10 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
 
         // Set Navigator for view model
         viewModel.setNavigator(RegistrationActivity.this);
+        // Bind Login ViewModel
+        registrationBinding.setRegistrationViewHolder(viewModel);
+        // Setup the Snackbar text observable
+        setupSnackbar();
     }
 
     /* ============================= Implemented Interface Method =============================== */
@@ -67,4 +74,17 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
 
 
     /* =================================== User Define Methods ================================== */
+
+    /**
+     * This method is used setup the {@link android.support.design.widget.Snackbar} callback to the appropriate message on screen.
+     */
+    private void setupSnackbar() {
+        mSnackbarCallback = new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable observable, int i) {
+                SnackbarUtils.showSnackbar(registrationBinding.getRoot(), viewModel.getSnackbarText());
+            }
+        };
+        viewModel.snackbarText.addOnPropertyChangedCallback(mSnackbarCallback);
+    }
 }

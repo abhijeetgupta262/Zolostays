@@ -1,13 +1,14 @@
 package com.zolostays.application;
 
 import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.zolostays.dagger.ZolostaysAppModule;
 import com.zolostays.data.source.DaggerUsersRepositoryComponent;
 import com.zolostays.data.source.UsersRepositoryComponent;
 
 
-public class ZolostaysApplication extends Application {
+public class ZolostaysApplication extends MultiDexApplication {
     /* ====================================== Interface ========================================= */
 
 

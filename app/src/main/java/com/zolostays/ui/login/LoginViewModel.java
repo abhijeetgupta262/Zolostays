@@ -105,7 +105,6 @@ public class LoginViewModel extends BaseViewModel {
                 public void onUserLoaded(User user) {
                     if (navigator != null)
                         navigator.goForHome();
-                    snackbarText.set("Home");
                 }
 
                 @Override
